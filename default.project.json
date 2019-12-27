@@ -15,6 +15,9 @@
 			},
 			"TS": {
 				"$path": "out/shared"
+			},
+			"Types": {
+				"$path": "out/types"
 			}
 		},
 		"StarterPlayer": {

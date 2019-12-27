@@ -10,6 +10,21 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@rbxts/types": "^1.0.316"
+    "@rbxts/types": "^1.0.316",
+    "@typescript-eslint/eslint-plugin": "^2.13.0",
+    "@typescript-eslint/parser": "^2.13.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.8.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-roblox-ts": "0.0.8",
+    "i": "^0.3.6",
+    "npm": "^6.13.4",
+    "prettier": "^1.19.1"
+  },
+  "dependencies": {
+    "@rbxts/remoteevent": "^1.0.2",
+    "@rbxts/services": "^1.0.3",
+    "@rbxts/t": "^1.2.6",
+    "@rbxts/validate-tree": "^1.0.4"
   }
 }
