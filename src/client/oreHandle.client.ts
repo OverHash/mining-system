@@ -2,7 +2,7 @@ import { Players, UserInputService, Workspace, RunService } from '@rbxts/service
 import t = require('@rbxts/t');
 import { settings } from 'types/settings';
 import { createClientRemoteEvents, createServerRemoteEvents } from '@rbxts/remoteevent';
-import { remotes } from 'types/global';
+import { remotes, isOre } from 'types/global';
 
 const player = Players.LocalPlayer;
 const backpack = player.WaitForChild('Backpack');
@@ -18,23 +18,6 @@ const pickaxeCheck = t.intersection(
 		Handle: t.instanceIsA('BasePart'),
 	}),
 );
-
-interface BaseOre extends BasePart {
-	Parent: Folder;
-}
-
-function isOre(value: unknown): value is BaseOre {
-	if (value === undefined) return false;
-	if (!typeIs(value, 'Instance')) return false;
-	if (!value.IsA('BasePart')) return false;
-	if (!value.Parent) return false;
-	if (!(value.Parent.ClassName === 'Folder')) return false;
-	print(value.GetFullName());
-	if (value.Parent !== Workspace.Ores) return false;
-	print('correct parent');
-
-	return true;
-}
 
 const mainRemote = createClientRemoteEvents(remotes);
 
@@ -68,7 +51,7 @@ UserInputService.InputBegan.Connect((key, gameProcessedEvent) => {
 
 	const hit = mouse.Target;
 
-	if (hit && isOre(hit)) {
+	if (hit && isOre(hit) && pickaxe && pickaxe.Parent === character) {
 		const oreDistance = humanoidRootPart.Position.sub(hit.Position).Magnitude;
 
 		if (oreDistance < settings.clickDistance) {
@@ -103,7 +86,6 @@ function displayHitbox() {
 	const hit = mouse.Target;
 
 	if (hit && isOre(hit)) {
-		print('hit exists');
 		const oreDistance = humanoidRootPart.Position.sub(hit.Position).Magnitude;
 
 		// reparent old selection box

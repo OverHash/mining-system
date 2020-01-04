@@ -1,4 +1,4 @@
-import { percentages } from 'types/global';
+import { percentages, BaseOre } from 'types/global';
 import { ReplicatedStorage, Workspace } from '@rbxts/services';
 import { settings } from 'types/settings';
 
@@ -17,7 +17,8 @@ function generateBlockType(): string {
 	return 'stone';
 }
 
-const ores: Array<Array<Array<Block | undefined>>> = [];
+const ores: Map<string, Block> = new Map();
+const oresMined: Array<string> = [];
 
 /**
  * A class to determine a block
@@ -52,21 +53,37 @@ export class Block {
 		this.block.Name = `${x}:${y}:${z}`;
 		this.block.Parent = Workspace.Ores;
 
-		if (!ores[this.x]) {
-			ores[this.x] = [];
-		}
-		if (!ores[this.x][this.y]) {
-			ores[this.x][this.y] = [];
-		}
-		ores[this.x][this.y][this.z] = this;
+		print(new Vector3(this.x, this.y, this.z));
+		ores.set(`${this.x}:${this.y}:${this.z}`, this);
 	}
 
 	/** Destroys an ore, and generates ores around it (if they dont exist) */
 	destroy() {
-		const oreLeft = ores[this.x][this.y][this.z - 1];
+		// i dont really like this function, too copy pasta
+		// i am really not proud of this please send help
 
-		print(oreLeft);
+		const oreLeft = ores.get(`${this.x - 1}:${this.y}:${this.z}`);
+		const oreRight = ores.get(`${this.x + 1}:${this.y}:${this.z}`);
+		const oreUp = ores.get(`${this.x}:${this.y}:${this.z - 1}`);
+		const oreDown = ores.get(`${this.x}:${this.y}:${this.z + 1}`);
+		const oreBelow = ores.get(`${this.x}:${this.y - 1}:${this.z}`);
+
+		oresMined.push(`${this.x}:${this.y}:${this.z}`);
+
+		this.block.Destroy();
+		ores.delete(`${this.x}:${this.y}:${this.z}`);
+
+		if (!oreLeft && !(oresMined.find(val => val === `${this.x - 1}:${this.y}:${this.z}`))) new Block(this.x - 1, this.y, this.z);
+		if (!oreRight && !(oresMined.find(val => val === `${this.x + 1}:${this.y}:${this.z}`))) new Block(this.x + 1, this.y, this.z);
+		if (!oreUp && !(oresMined.find(val => val === `${this.x}:${this.y}:${this.z - 1}`))) new Block(this.x, this.y, this.z - 1);
+		if (!oreDown && !(oresMined.find(val => val === `${this.x}:${this.y}:${this.z + 1}`))) new Block(this.x, this.y, this.z + 1);
+		if (!oreBelow && !(oresMined.find(val => val === `${this.x}:${this.y - 1}:${this.z}`))) new Block(this.x, this.y - 1, this.z);
 	}
 }
 
-export {};
+export function getBlockFromOre(ore: BaseOre): Block | void {
+	return ores.get(
+		// eslint-disable-next-line prettier/prettier
+		`${ore.Position.X / settings.blockSize}:${ore.Position.Y / settings.blockSize}:${ore.Position.Z / settings.blockSize}`,
+	);
+}
