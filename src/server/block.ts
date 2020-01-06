@@ -67,6 +67,7 @@ export class Block {
 		const oreUp = ores.get(`${this.x}:${this.y}:${this.z - 1}`);
 		const oreDown = ores.get(`${this.x}:${this.y}:${this.z + 1}`);
 		const oreBelow = ores.get(`${this.x}:${this.y - 1}:${this.z}`);
+		const oreAbove = ores.get(`${this.x}:${this.y + 1}:${this.z}`);
 
 		oresMined.push(`${this.x}:${this.y}:${this.z}`);
 
@@ -78,6 +79,7 @@ export class Block {
 		if (!oreUp && !(oresMined.find(val => val === `${this.x}:${this.y}:${this.z - 1}`))) new Block(this.x, this.y, this.z - 1);
 		if (!oreDown && !(oresMined.find(val => val === `${this.x}:${this.y}:${this.z + 1}`))) new Block(this.x, this.y, this.z + 1);
 		if (!oreBelow && !(oresMined.find(val => val === `${this.x}:${this.y - 1}:${this.z}`))) new Block(this.x, this.y - 1, this.z);
+		if (!oreAbove && !(oresMined.find(val => val === `${this.x}:${this.y + 1}:${this.z}`)) && this.y <= -1) new Block(this.x, this.y + 1, this.z);
 	}
 }
 

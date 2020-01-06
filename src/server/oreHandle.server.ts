@@ -1,8 +1,7 @@
-import { createServerRemoteEvents } from "@rbxts/remoteevent";
-import { remotes, isOre } from "types/global";
-import { Players } from "@rbxts/services";
-import { settings } from "types/settings";
-import { getBlockFromOre } from "./block";
+import { createServerRemoteEvents } from '@rbxts/remoteevent';
+import { remotes, isOre } from 'types/global';
+import { settings } from 'types/settings';
+import { getBlockFromOre } from './block';
 
 const mainRemote = createServerRemoteEvents(remotes);
 
@@ -19,15 +18,14 @@ mainRemote.server.destroyOre((player, ore) => {
 	if (!humanoidRootPart) return;
 
 	const distance = humanoidRootPart.Position.sub(ore.Position).Magnitude;
-	
+
 	// check if out of reach
 	if (distance > settings.clickDistance) return;
 
 	// it's in reach, destroy.
 	const block = getBlockFromOre(ore);
 
-	if (block) { 
-		print(block.block.Name + ' exists, destroying it!');
+	if (block) {
 		block.destroy();
 	}
-})
+});

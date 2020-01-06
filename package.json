@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@rbxts/remoteevent": "^1.0.2",
+    "@rbxts/roact": "^1.1.5",
     "@rbxts/services": "^1.0.3",
     "@rbxts/t": "^1.2.6",
     "@rbxts/validate-tree": "^1.0.4"
