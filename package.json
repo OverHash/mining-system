@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "An example project for roblox-ts!",
   "repository": {
-	  "type": "git",
-	  "url": "https://github.com/OverHash/mining-system"
+    "type": "git",
+    "url": "https://github.com/OverHash/mining-system"
   },
   "main": "index.js",
   "scripts": {
@@ -14,14 +14,15 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@rbxts/types": "^1.0.316",
-    "@typescript-eslint/eslint-plugin": "^2.13.0",
-    "@typescript-eslint/parser": "^2.13.0",
+    "@rbxts/types": "^1.0.343",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
     "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-roblox-ts": "0.0.8",
     "i": "^0.3.6",
+    "minimist": "^1.2.5",
     "npm": "^6.14.3",
     "prettier": "^1.19.1"
   },
