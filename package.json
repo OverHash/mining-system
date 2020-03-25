@@ -1,7 +1,11 @@
 {
   "name": "mining-system",
   "version": "1.0.0",
-  "description": "",
+  "description": "An example project for roblox-ts!",
+  "repository": {
+	  "type": "git",
+	  "url": "https://github.com/OverHash/mining-system"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,7 +22,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-roblox-ts": "0.0.8",
     "i": "^0.3.6",
-    "npm": "^6.13.4",
+    "npm": "^6.14.3",
     "prettier": "^1.19.1"
   },
   "dependencies": {
