@@ -74,12 +74,22 @@ export class Block {
 		this.block.Destroy();
 		ores.delete(`${this.x}:${this.y}:${this.z}`);
 
-		if (!oreLeft && !(oresMined.find(val => val === `${this.x - 1}:${this.y}:${this.z}`))) new Block(this.x - 1, this.y, this.z);
-		if (!oreRight && !(oresMined.find(val => val === `${this.x + 1}:${this.y}:${this.z}`))) new Block(this.x + 1, this.y, this.z);
-		if (!oreUp && !(oresMined.find(val => val === `${this.x}:${this.y}:${this.z - 1}`))) new Block(this.x, this.y, this.z - 1);
-		if (!oreDown && !(oresMined.find(val => val === `${this.x}:${this.y}:${this.z + 1}`))) new Block(this.x, this.y, this.z + 1);
-		if (!oreBelow && !(oresMined.find(val => val === `${this.x}:${this.y - 1}:${this.z}`))) new Block(this.x, this.y - 1, this.z);
-		if (!oreAbove && !(oresMined.find(val => val === `${this.x}:${this.y + 1}:${this.z}`)) && this.y <= -1) new Block(this.x, this.y + 1, this.z);
+		if (!oreLeft && !(oresMined.find(val => val === `${this.x - 1}:${this.y}:${this.z}`) !== undefined))
+			new Block(this.x - 1, this.y, this.z);
+		if (!oreRight && !(oresMined.find(val => val === `${this.x + 1}:${this.y}:${this.z}`) !== undefined))
+			new Block(this.x + 1, this.y, this.z);
+		if (!oreUp && !(oresMined.find(val => val === `${this.x}:${this.y}:${this.z - 1}`) !== undefined))
+			new Block(this.x, this.y, this.z - 1);
+		if (!oreDown && !(oresMined.find(val => val === `${this.x}:${this.y}:${this.z + 1}`) !== undefined))
+			new Block(this.x, this.y, this.z + 1);
+		if (!oreBelow && !(oresMined.find(val => val === `${this.x}:${this.y - 1}:${this.z}`) !== undefined))
+			new Block(this.x, this.y - 1, this.z);
+		if (
+			!oreAbove &&
+			!(oresMined.find(val => val === `${this.x}:${this.y + 1}:${this.z}`) !== undefined) &&
+			this.y <= -1
+		)
+			new Block(this.x, this.y + 1, this.z);
 	}
 }
 
