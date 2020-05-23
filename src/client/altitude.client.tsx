@@ -12,8 +12,6 @@ interface AltitudeProps {
 	depth: string;
 }
 
-print(Enum.UserInputState);
-
 function Altitude({ depth }: AltitudeProps) {
 	return (
 		<screengui ZIndexBehavior={Enum.ZIndexBehavior.Sibling} Key="AltitudeGui" ResetOnSpawn={false}>
