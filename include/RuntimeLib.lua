@@ -54,14 +54,18 @@ end
 TS.Symbol = Symbol
 TS.Symbol_iterator = Symbol("Symbol.iterator")
 
+local function isPlugin(object)
+	return RunService:IsStudio() and object:FindFirstAncestorWhichIsA("Plugin") ~= nil
+end
+
 -- module resolution
 function TS.getModule(object, moduleName)
 	if not __LEMUR__ and object:IsDescendantOf(ReplicatedFirst) then
-		warn("node_modules should not be used from ReplicatedFirst")
+		warn("roblox-ts packages should not be used from ReplicatedFirst!")
 	end
 
 	-- ensure modules have fully replicated
-	if not __LEMUR__ and RunService:IsClient() and not game:IsLoaded() then
+	if not __LEMUR__ and RunService:IsRunning() and RunService:IsClient() and not isPlugin(object) and not game:IsLoaded() then
 		game.Loaded:Wait()
 	end
 
@@ -192,16 +196,45 @@ function TS.async(callback)
 	end
 end
 
+function TS.generator(c)
+	c = coroutine.create(c)
+
+	local o = {
+		next = function(...)
+			if coroutine.status(c) == "dead" then
+				return { done = true }
+			else
+				local success, value = coroutine.resume(c, ...)
+				if success == false then error(value, 2) end
+				return { value = value, done = coroutine.status(c) == "dead" }
+			end
+		end
+	}
+
+	o[TS.Symbol_iterator] = function() return o end
+
+	return o
+end
+
+local function package(...)
+	return select("#", ...), {...}
+end
+
 function TS.await(promise)
 	if not Promise.is(promise) then
 		return promise
 	end
 
-	local ok, result = promise:await()
+	local size, result = package(promise:await())
+	local ok = table.remove(result, 1)
 	if ok then
-		return result
+		if size > 2 then
+			return result
+		else
+			return result[1]
+		end
 	else
-		error(ok == nil and "The awaited Promise was cancelled" or result, 2)
+		error(ok == nil and "The awaited Promise was cancelled" or (size > 2 and result[1] or result), 2)
 	end
 end
 
@@ -782,6 +815,8 @@ function TS.map_new(pairs)
 	return result
 end
 
+TS.Object_fromEntries = TS.map_new
+
 function TS.map_clear(map)
 	for key in pairs(map) do
 		map[key] = nil
@@ -891,6 +926,36 @@ TS.set_size = getNumKeys
 
 TS.set_toString = toString
 
+function TS.string_startsWith(str1, str2, pos)
+	local n1 = #str1
+	local n2 = #str2
+
+	if pos == nil or pos ~= pos then
+		pos = 0
+	else
+		pos = math.clamp(pos, 0, n1)
+	end
+
+	local last = pos + n2;
+	return last <= n1 and string.sub(str1, pos + 1, last) == str2
+end
+
+function TS.string_endsWith(str1, str2, pos)
+	local n1 = #str1
+	local n2 = #str2
+
+	if pos == nil then
+		pos = n1
+	elseif pos ~= pos then
+		pos = 0
+	else
+		pos = math.clamp(pos, 0, n1)
+	end
+
+	local start = pos - n2 + 1;
+	return start > 0 and string.sub(str1, start, pos) == str2
+end
+
 -- spread cache functions
 function TS.string_spread(str)
 	local results = {}
@@ -911,10 +976,6 @@ function TS.iterableCache(iter)
 		results[count] = _0.value
 	end
 	return results
-end
-
-local function package(...)
-	return select("#", ...), {...}
 end
 
 function TS.iterableFunctionCache(iter)
