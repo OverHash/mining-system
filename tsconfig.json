@@ -4,6 +4,7 @@
 		"allowSyntheticDefaultImports": true,
 		"isolatedModules": true,
 		"downlevelIteration": true,
+		"moduleResolution": "Node",
 		"module": "commonjs",
 		"noLib": true,
 		"strict": true,
