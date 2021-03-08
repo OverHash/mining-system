@@ -8,8 +8,8 @@ const randomObject = new Random();
 function generateBlockType(): string {
 	const totalChance = randomObject.NextNumber(0, 100);
 
-	for (const [oreName, [startPercentage, endPercentange]] of Object.entries(percentages)) {
-		if (totalChance >= startPercentage && totalChance < endPercentange) {
+	for (const [oreName, [startPercentage, endPercentage]] of pairs(percentages)) {
+		if (totalChance >= startPercentage && totalChance < endPercentage) {
 			return oreName;
 		}
 	}

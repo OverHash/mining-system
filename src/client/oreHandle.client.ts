@@ -1,7 +1,7 @@
 import { Players, UserInputService, Workspace, RunService } from '@rbxts/services';
-import t = require('@rbxts/t');
+import { t } from '@rbxts/t';
 import { settings } from 'types/settings';
-import { createClientRemoteEvents, createServerRemoteEvents } from '@rbxts/remoteevent';
+import { createClientRemoteEvents } from '@rbxts/remoteevent';
 import { remotes, isOre } from 'types/global';
 
 const player = Players.LocalPlayer;
@@ -21,7 +21,7 @@ const pickaxeCheck = t.intersection(
 
 const mainRemote = createClientRemoteEvents(remotes);
 
-function getPickaxe(): BasePickaxe | void {
+function getPickaxe(): BasePickaxe | undefined {
 	const character = player.Character || player.CharacterAdded.Wait()[0];
 
 	const backpackPickaxe = backpack.FindFirstChild('pickaxe');

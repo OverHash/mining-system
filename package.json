@@ -14,23 +14,22 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@rbxts/types": "^1.0.343",
-    "@typescript-eslint/eslint-plugin": "^2.25.0",
-    "@typescript-eslint/parser": "^2.25.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.1",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-roblox-ts": "0.0.8",
-    "i": "^0.3.6",
-    "minimist": "^1.2.5",
-    "npm": "^6.14.6",
-    "prettier": "^1.19.1"
+    "@rbxts/compiler-types": "^1.0.0-types.0",
+    "@rbxts/types": "^1.0.460",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
+    "eslint": "^7.21.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-roblox-ts": "^0.0.25",
+    "prettier": "^2.2.1",
+    "roblox-ts": "^1.0.0"
   },
   "dependencies": {
     "@rbxts/remoteevent": "^1.0.2",
-    "@rbxts/roact": "^1.1.5",
-    "@rbxts/services": "^1.0.3",
-    "@rbxts/t": "^1.2.6",
-    "@rbxts/validate-tree": "^1.0.4"
+    "@rbxts/roact": "^1.3.0-ts.10",
+    "@rbxts/services": "^1.1.2",
+    "@rbxts/t": "^2.1.1",
+    "@rbxts/validate-tree": "^1.1.1"
   }
 }
